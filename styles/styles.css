@@ -1,0 +1,46 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 30px;
+}
+/* warum werden diese einstellungen nicht übernommen? sondern nur die von navbar aus pixel.css*/
+
+
+h1{
+    text-align: center;
+}
+
+body{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+   /*margin-left: 300px;
+   margin-right: 200px;*/
+}
+
+.footer{
+    display: flex;
+    gap: 105px;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+
+}
+
+.socialIcons{
+
+}
+
+/*
+hero
+main 
+action
+- new file - bootstraptheme.css überschriebenen bootstrap sachen SAHNEHÄUBCHEN
+*/
+
+
+/* TO DO
+- @media einfügen für kleinere Screens für Navigationbar + Footer*/
