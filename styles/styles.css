@@ -1,3 +1,19 @@
+@font-face {
+    font-family: 'Windows 95';
+    src: url('/styles/fonts/w-95-sans-serif.woff2') format('woff2'),
+        url('/styles/fonts/w-95-sans-serif.woff') format('woff'); /*hab die fonts verschoben von windows in style ordner*/
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    font-family: 'Windows 95' !important;
+    /* grid-template-columns: 1fr;
+    grid-template-rows: auto; */
+   /*margin-left: 300px;
+   margin-right: 200px;*/
+}
+
 .navbar {
     display: flex;
     flex-direction: row;
@@ -13,12 +29,7 @@ h1{
     text-align: center;
 }
 
-body{
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-   /*margin-left: 300px;
-   margin-right: 200px;*/
-}
+
 
 .footer{
     display: flex;
