@@ -8,6 +8,9 @@
 
 body{
     font-family: 'Windows 95' !important;
+    text-align: justify; /*eingefügt aus dem button video
+    max-width: 600px; /*eingefügt aus dem button video
+    margin: 0 auto; /*eingefügt aus dem button video
     /* grid-template-columns: 1fr;
     grid-template-rows: auto; */
    /*margin-left: 300px;
@@ -30,6 +33,29 @@ h1{
 }
 
 
+/* // Show more - Show Less Button */
+.text
+
+.moreText{
+    display: none; /*damiit der Text nicht mehr angezeigt wird*/
+}
+
+.read-more-btn{
+     padding: 15px 60px; /*padding left & right  */
+     /* kann noch weiter gestyled werden:background-color: / color: / font-size / cursor:pointer ;;  */
+     border: none;
+     outline: none;
+}
+
+.text.show-more .moreText{
+    display:inline;
+}
+/* with a click on the btn the text will now expand/ increase*/
+
+.text.show-more .dots {
+    display: none;
+}
+/* whenever we will have the "show more" in our text, I want to dissapear the dots  */
 
 .footer{
     display: flex;
