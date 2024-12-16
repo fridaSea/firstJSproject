@@ -75,13 +75,13 @@ function buildMyCards(animals) {
   console.log("animals :>> ", animals);
   const commonNamesContainer = document.querySelector("body");
 
-  for (let i = 0; i < animals.length; i++) {
-    // console.log("animals[i] :>> ", animals[i]);
-    const animalCommonName = document.createElement("p");
-    animalCommonName.innerText = animals[i].commonName;
+  // for (let i = 0; i < animals.length; i++) {
+  //   // console.log("animals[i] :>> ", animals[i]);
+  //   const animalCommonName = document.createElement("p");
+  //   animalCommonName.innerText = animals[i].commonName;
 
-    commonNamesContainer.appendChild(animalCommonName);
-  }
+  //   commonNamesContainer.appendChild(animalCommonName);
+  // }
 }
 
 getData();
@@ -113,20 +113,24 @@ const displayAnimals = (animals) => {
     cardImage.setAttribute("alt", "Image of an extincted animal");
     // HERE IF CONDITION EINFÜGEN FÜR DIE ANIMALS WELCHE KEIN BILD HABEN??? If ("imageSrc": "false",) insert "no pic(from assets)"
 
-    // console.log("animals[i]image :>>", animals[i].imageSrc); -> das passt, hier werden in der Konsole entweder die Links ausgegebn oder false
-    if (
-      animals[i].imageSrc &&
-      animals[i].imageSrc !== false &&
-      animals[i].imageSrc !== "false"
-    ) {
+    console.log("animals[i]image :>>", animals[i].imageSrc);
+    //-> das passt, hier werden in der Konsole entweder die Links ausgegebn oder false
+    if (animals[i].imageSrc && animals[i].imageSrc !== "false") {
       cardImage.setAttribute("src", animals[i].imageSrc);
+
+      cardImage.addEventListener("error", function (error) {
+        //console.log("Image load fail", error, animals[i]);
+        cardImage.setAttribute("src", "/assets/no_pic-32.png");
+      });
     } else {
-      console.log("Platzhalterbild wird gesetzt"); // Hierbei wurd angezeigt, dass für 220 Tiere der Text gesetzt wird, was so auch stimmt mit den angaben von der API - auf der website wird mir aber immer noch kein platzhalterbild angezeigt
+      //console.log("Platzhalterbild wird gesetzt"); // Hierbei wurd angezeigt, dass für 220 Tiere der Text gesetzt wird, was so auch stimmt mit den angaben von der API - auf der website wird mir aber immer noch kein platzhalterbild angezeigt
       cardImage.setAttribute("src", "/assets/no_pic-32.png");
       // const cardImage = document.createElement("img");
       // cardImage.setAttribute("src", "assets/no_pic-32.png"); // want to have it for every element of the array
       // cardImage.setAttribute("alt", "Platzhalter ");
     }
+
+    // Imake not reahcable for "Floreana giant tortoise" & Slender-billed curlew TO DO
 
     // NOCH NICHT GANZ RICHTIG
     // if (animals[i].imageSrc !== false && animals[i].imageSrc !== "") {
@@ -151,11 +155,7 @@ const displayAnimals = (animals) => {
     cardTitle.setAttribute("class", "card-title");
     cardTitle.innerText = animals[i].commonName;
 
-    if (
-      animals[i].commonName &&
-      animals[i].commonName !== false &&
-      animals[i].commonName !== "false"
-    ) {
+    if (animals[i].commonName && animals[i].commonName !== "false") {
       cardTitle.setAttribute("src", animals[i].commonName);
     } else {
       //console.log("Common Name unknown");
