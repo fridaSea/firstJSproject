@@ -151,6 +151,17 @@ const displayAnimals = (animals) => {
     cardTitle.setAttribute("class", "card-title");
     cardTitle.innerText = animals[i].commonName;
 
+    if (
+      animals[i].commonName &&
+      animals[i].commonName !== false &&
+      animals[i].commonName !== "false"
+    ) {
+      cardTitle.setAttribute("src", animals[i].commonName);
+    } else {
+      //console.log("Common Name unknown");
+      cardTitle.innerText = "Unknown";
+    }
+
     // cardDescription lasse ich erst einmal raus, da es mir zu viel ist auf den Karten -> vielleicht die Description dort hinterlegen, wo mit dem Button hin verlinbkt werden kann TO DO
     // const cardDescription = document.createElement("p");
     // cardDescription.setAttribute("class", "card-text");
@@ -178,3 +189,18 @@ const displayAnimals = (animals) => {
     cardsContainer.appendChild(cardContainer); // wenn ich die Reihenfolge hier ändern möchte, muss ich hier die Reihenfolge ändenr
   }
 };
+
+// Using Grid (Stacked horizontal) to display the Cards
+
+// Bootstrap Vorlage:
+// <div class="container text-center">
+//   <div class="row">
+//     <div class="col-sm-8">col-sm-8</div>
+//     <div class="col-sm-4">col-sm-4</div>
+//   </div>
+//   <div class="row">
+//     <div class="col-sm">col-sm</div>
+//     <div class="col-sm">col-sm</div>
+//     <div class="col-sm">col-sm</div>
+//   </div>
+// </div>
