@@ -47,8 +47,8 @@
 function getData() {
   fetch("https://extinct-api.herokuapp.com/api/v1/animal/804")
     .then((response) => {
-      console.log("response:>>", response);
-      return response.json();
+      console.log("response:>>", response); // Paket kommt an mit Status (Erfolgsstaus oder Fehlerstatus)
+      return response.json(); // Paket wird aufgemacht und ich sehe den Inhalt, verarbeite den Inhalt und verpacke die Inhalte in einem json)
     })
     .then((result) => {
       console.log("result:", result);
@@ -57,6 +57,7 @@ function getData() {
       console.log("animals:", animals);
       buildMyCards(animals);
       displayAnimals(animals);
+
       //displayAnimals(animalsArray)  -> Hier oben noch einfügen?
     })
     .catch((error) => {
@@ -108,6 +109,33 @@ const displayAnimals = (animals) => {
     cardContainer.setAttribute("style", "width: 18rem");
 
     const cardImage = document.createElement("img");
+    cardImage.setAttribute("src", animals[i].imageSrc); // want to have it for every element of the array
+    cardImage.setAttribute("alt", "Image of an extincted animal");
+    // HERE IF CONDITION EINFÜGEN FÜR DIE ANIMALS WELCHE KEIN BILD HABEN??? If ("imageSrc": "false",) insert "no pic(from assets)"
+
+    // console.log("animals[i]image :>>", animals[i].imageSrc); -> das passt, hier werden in der Konsole entweder die Links ausgegebn oder false
+    if (
+      animals[i].imageSrc &&
+      animals[i].imageSrc !== false &&
+      animals[i].imageSrc !== "false"
+    ) {
+      cardImage.setAttribute("src", animals[i].imageSrc);
+    } else {
+      console.log("Platzhalterbild wird gesetzt"); // Hierbei wurd angezeigt, dass für 220 Tiere der Text gesetzt wird, was so auch stimmt mit den angaben von der API - auf der website wird mir aber immer noch kein platzhalterbild angezeigt
+      cardImage.setAttribute("src", "/assets/no_pic-32.png");
+      // const cardImage = document.createElement("img");
+      // cardImage.setAttribute("src", "assets/no_pic-32.png"); // want to have it for every element of the array
+      // cardImage.setAttribute("alt", "Platzhalter ");
+    }
+
+    // NOCH NICHT GANZ RICHTIG
+    // if (animals[i].imageSrc !== false && animals[i].imageSrc !== "") {
+    //   cardImage.setAttribute("src", animals[i].imageSrc);
+    // } else {
+    //   cardImage.setAttribute("src", "assets/no_pic-32.png");
+    // }
+
+    // ALT ALT ALT
     // if (animals[i].imageSrc) {
     //   cardImage.setAttribute("src", animals[i].imageSrc);
     // } else {
@@ -116,11 +144,37 @@ const displayAnimals = (animals) => {
     // src = "assets/icons8-instagram-32.png";
     // schauen, ob das so richtig ist
 
-    cardImage.setAttribute("src", animals[i].imageSrc);
-    cardImage.setAttribute("alt", "Image of an extincted animal");
-    // HERE IF CONDITION EINFÜGEN FÜR DIE ANIMALS WELCHE KEIN BILD HABEN??? If ("imageSrc": "false",) insert "no pic(from assets)"
+    const cardBody = document.createElement("div");
+    cardBody.setAttribute("class", "card-body");
 
+    const cardTitle = document.createElement("h5");
+    cardTitle.setAttribute("class", "card-title");
+    cardTitle.innerText = animals[i].commonName;
+
+    // cardDescription lasse ich erst einmal raus, da es mir zu viel ist auf den Karten -> vielleicht die Description dort hinterlegen, wo mit dem Button hin verlinbkt werden kann TO DO
+    // const cardDescription = document.createElement("p");
+    // cardDescription.setAttribute("class", "card-text");
+    // cardDescription.innerText = animals[i].shortDesc;
+
+    // Button to ge somewhere könnte noch eingebaut werden
+
+    // cardDescription lasse ich erst einmal raus, da es mir zu viel ist auf den Karten -> vielleicht die Description dort hinterlegen, wo mit dem Button hin verlinbkt werden kann TO DO
+    // const cardDescription = document.createElement("p");
+    // cardDescription.setAttribute("class", "card-text");
+    // cardDescription.innerText = animals[i].shortDesc;
+
+    // Button to ge somewhere könnte noch eingebaut werden
+
+    const cardButton = document.createElement("a");
+    cardButton.setAttribute("class", "btn btn-secondary");
+    cardButton.setAttribute("href", "#"); // TO DO - Verlinkung noch hinzufügen
+    cardButton.innerText = "Go somewhere";
+
+    //cardBody.appendChild(cardDescription);
     cardContainer.appendChild(cardImage);
-    cardsContainer.appendChild(cardContainer);
+    cardBody.appendChild(cardTitle);
+    cardBody.appendChild(cardButton);
+    cardContainer.appendChild(cardBody);
+    cardsContainer.appendChild(cardContainer); // wenn ich die Reihenfolge hier ändern möchte, muss ich hier die Reihenfolge ändenr
   }
 };
