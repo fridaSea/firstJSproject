@@ -33,3 +33,57 @@
 // };
 
 // - Dropdown größer machen, damit auch das "p" komplett angezeigt wird
+
+// BUILDING FILTERS
+
+// DROPDOWN
+//1. fetching the data
+const getLocation = () => {
+  fetch("https://extinct-api.herokuapp.com/api/v1/animal/804")
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      const animals = result.data;
+      console.log("animals:", animals);
+      createHtmlTable(animals);
+    })
+    .catch((error) => {
+      console.log("error:>>", error);
+    });
+};
+
+//2. function for creating table and dropdown
+const createHtmlTable = (animals) => {
+  const table = document.getElementById("table");
+
+  /*for(let i=0; i < animals.length; i++){
+    let row = document.createElement("tr");
+    table.appendChild(row);
+
+    let column = document.createElement("td");
+    column.innerText = animals[i].location;
+    row.appendChild(column);
+
+    let column2 = document.createElement("td");
+    column2.innerText = animals[i].commonName;
+    row.appendChild(column2);
+  }*/
+
+  animals.forEach((animal, i) => {
+    let row = document.createElement("tr");
+    table.appendChild(row);
+
+    let column = document.createElement("td");
+    column.innerText = animal.location;
+    row.appendChild(column);
+
+    let column2 = document.createElement("td");
+    column2.innerText = animal.commonName;
+    row.appendChild(column2);
+  });
+};
+
+// filter
+
+getLocation();

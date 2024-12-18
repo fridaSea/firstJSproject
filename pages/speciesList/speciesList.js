@@ -1,48 +1,3 @@
-// const displaybinomialName = (animalsArray) => {
-//   const animalsContainer = document.querySelector(".cardsContainer");
-
-//   // Loop through the animals array
-//   for (let i = 0; i < animalsArray.length; i++) {
-//     const animalGroup = animalsArray[i]; // Get each animal group (object)
-//     //console.log("animalGroup:", animalGroup);
-//     // Loop through the data property to access each individual animal
-//     for (let j = 0; j < animalGroup.data.length; j++) {
-//       const animal = animalGroup.data[j]; // Get each animal object
-//       //console.log("animal:", animal);
-//       const animalName = document.createElement("p");
-//       animalName.innerText = animal.binomialName; // Display the binomial name
-//       //console.log("animalName:", animalName);
-//       animalsContainer.appendChild(animalName); // Append the name to the container
-//     }
-//   }
-// };
-
-// displaybinomialName(animals); // Pass the 'animals' array to the function
-
-// // das gleiche jetzt für common name:
-// const displaybinomialName = (animalsArray) => {
-//   const animalsContainer = document.querySelector(".cardsContainer");
-
-//   // Loop through the animals array
-//   for (let i = 0; i < animalsArray.length; i++) {
-//     const animalGroup = animalsArray[i]; // Get each animal group (object)
-//     //console.log("animalGroup:", animalGroup);
-//     // Loop through the data property to access each individual animal
-//     for (let j = 0; j < animalGroup.data.length; j++) {
-//       const animal = animalGroup.data[j]; // Get each animal object
-//       //console.log("animal:", animal);
-//       const animalName = document.createElement("p");
-//       animalName.innerText = animal.commonName; // Display the binomial name
-//       //console.log("animalName:", animalName);
-//       animalsContainer.appendChild(animalName); // Append the name to the container
-//     }
-//   }
-// };
-
-// displaybinomialName(animals); // Pass the 'animals' array to the function
-
-//----- WORKS SO FAR WITH THE FILE Above ------
-
 // Daten per API abrufen = This is the structure that has to be build in order to get data from a server !!!
 function getData() {
   fetch("https://extinct-api.herokuapp.com/api/v1/animal/804")
@@ -54,11 +9,10 @@ function getData() {
       console.log("result:", result);
       // const animals = data.data;
       const animals = result.data;
+
       console.log("animals:", animals);
       buildMyCards(animals);
       displayAnimals(animals);
-
-      //displayAnimals(animalsArray)  -> Hier oben noch einfügen?
     })
     .catch((error) => {
       console.log("error:>>", error);
@@ -69,7 +23,7 @@ function getData() {
 //console.log("animals:", animals);
 //console.log(getData); // Check the structure of the animals array in the console
 
-// // Setup of the Cards
+// // SETUP OF THE CARDS
 
 function buildMyCards(animals) {
   console.log("animals :>> ", animals);
@@ -101,12 +55,22 @@ getData();
 //console.log(animals);
 
 const displayAnimals = (animals) => {
-  const cardsContainer = document.querySelector(".cards-container"); // toatally forgot about the "cardsContainer" from the .html
+  // Animals Array alphabetisch sortieren
+  animals.sort((a, b) => {
+    if (a.commonName < b.commonName) return -1;
+    if (a.commonName > b.commonName) return 1;
+    return 0;
+  });
+
+  const cardsContainer = document.querySelector(".row"); // toatally forgot about the "cardsContainer" from the .html
 
   for (let i = 0; i < animals.length; i++) {
     const cardContainer = document.createElement("div");
     cardContainer.setAttribute("class", "card");
-    cardContainer.setAttribute("style", "width: 18rem");
+    cardContainer.classList.add("col-sm-2");
+    cardContainer.classList.add("border-secondary");
+    //cardContainer.classList.add("text-center");
+    //cardContainer.setAttribute("style", "width: 18rem");
 
     const cardImage = document.createElement("img");
     cardImage.setAttribute("src", animals[i].imageSrc); // want to have it for every element of the array
@@ -130,23 +94,7 @@ const displayAnimals = (animals) => {
       // cardImage.setAttribute("alt", "Platzhalter ");
     }
 
-    // Imake not reahcable for "Floreana giant tortoise" & Slender-billed curlew TO DO
-
-    // NOCH NICHT GANZ RICHTIG
-    // if (animals[i].imageSrc !== false && animals[i].imageSrc !== "") {
-    //   cardImage.setAttribute("src", animals[i].imageSrc);
-    // } else {
-    //   cardImage.setAttribute("src", "assets/no_pic-32.png");
-    // }
-
-    // ALT ALT ALT
-    // if (animals[i].imageSrc) {
-    //   cardImage.setAttribute("src", animals[i].imageSrc);
-    // } else {
-    //   cardImage.setAttribute("src", "assets/no_pic-32.png");
-    // }
-    // src = "assets/icons8-instagram-32.png";
-    // schauen, ob das so richtig ist
+    // Image - URL error for "Floreana giant tortoise" & Slender-billed curlew TO DO
 
     const cardBody = document.createElement("div");
     cardBody.setAttribute("class", "card-body");
@@ -166,15 +114,6 @@ const displayAnimals = (animals) => {
     // const cardDescription = document.createElement("p");
     // cardDescription.setAttribute("class", "card-text");
     // cardDescription.innerText = animals[i].shortDesc;
-
-    // Button to ge somewhere könnte noch eingebaut werden
-
-    // cardDescription lasse ich erst einmal raus, da es mir zu viel ist auf den Karten -> vielleicht die Description dort hinterlegen, wo mit dem Button hin verlinbkt werden kann TO DO
-    // const cardDescription = document.createElement("p");
-    // cardDescription.setAttribute("class", "card-text");
-    // cardDescription.innerText = animals[i].shortDesc;
-
-    // Button to ge somewhere könnte noch eingebaut werden
 
     const cardButton = document.createElement("a");
     cardButton.setAttribute("class", "btn btn-secondary");
@@ -204,3 +143,11 @@ const displayAnimals = (animals) => {
 //     <div class="col-sm">col-sm</div>
 //   </div>
 // </div>
+
+// Infos zur Sort():
+// sort(): Das sort()-Array wird mit einer Vergleichsfunktion verwendet, die die commonName-Eigenschaft der Tiere vergleicht. Dies stellt sicher, dass die Tiere alphabetisch nach ihrem commonName sortiert werden.
+
+// a.commonName < b.commonName gibt -1 zurück, was bedeutet, dass a vor b kommt (alphabetisch).
+// a.commonName > b.commonName gibt 1 zurück, was bedeutet, dass b vor a kommt.
+// Wenn die commonName-Werte gleich sind, gibt die Funktion 0 zurück.
+// Fehlende oder ungültige commonName-Werte: Im Fall eines fehlenden oder ungültigen commonName kannst du eine Standardbezeichnung wie "Unknown" setzen (falls noch nicht geschehen).

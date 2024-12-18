@@ -1,0 +1,14 @@
+.card {
+    background-color: aliceblue !important;
+    margin: 10px;
+    /* justify-items: center;
+    align-items: center;
+    justify-content: center;
+    align-content: center; */
+}; 
+
+.btn {
+ justify-items: center;  
+ align-items: end;
+ align-content: end; 
+}
