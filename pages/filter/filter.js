@@ -93,6 +93,7 @@ getLocation();
 // 3. Generate Dropdown
 const createDropDown = (animals) => {
   const dropdown = document.getElementById("locationDropdown");
+
   // console.log("animalsDropdown:", animals); // works
   // Sortiere das Array der Tiere alphabetisch nach der Location
   animals.sort((a, b) => {
@@ -108,7 +109,7 @@ const createDropDown = (animals) => {
   // console.log("locations:>>", locations); // I created an array with the locations of the animals, still repeated (804)
   //const uniqueLocationsArray = new Set(locations); // It created a set, which I don`t want because I am not able to loop over it -> I need to transform this into an array (480)
   const uniqueLocationsArray = [...new Set(locations)]; // now I have an array with unique locations (480). No I am no longer loop over the animals but over uniqueLocationsArray and I don`t need to access any properties
-  //console.log("uniqueLocationsArray:>>", uniqueLocationsArray);
+  //console.log("uniqueLocationsArray:>>", uniqueLocationsArray); -> wird gedruckt
 
   for (let i = 0; i < uniqueLocationsArray.length; i++) {
     const option = document.createElement("option"); // for every animals I want to generate a dropdown element - created the element
@@ -139,7 +140,7 @@ function controller(animals) {
 
 // 5. ADD EVENT LISTENERS
 const setEventListener = (animals) => {
-  const locationListDropdown = document.querySelector("#locationDropdown"); // FRAGE: WARUM KOMMT HIER EIN # DAVOR?
+  const locationListDropdown = document.querySelector("#locationDropdown"); // FRAGE: WARUM KOMMT HIER EIN # DAVOR? -> weil bezogen auf css/ ich könnte auch schreiben mit getelementbyid, dann aber ohen #
   locationListDropdown.addEventListener("change", () => {
     //console.log("location selected");
     filterByDropDown(animals); // FRAGE: WARUM PACKE ICH DAS HIER UNTEN REIN UND NICHT WIE DAS ANDERE OBEN?
@@ -172,6 +173,13 @@ const filterByDropDown = (animals) => {
 // TO DO
 // - ich möchte ja keine tabelle darstellen sondern sie Karten. Also die bereits vorhandenen Cards möchte ich filtern können
 // - breite des Filterkastens anpassen
+// - get elementbyid - LIEBER NICHT verwendden, sondern einheitlich und besser queryselector
+// HAVE TO BE DONE !!!! TO DO!!!
+// - SUCHE bauen
+// -    Filter kombinieren
+// - filtern über Checkboxen
 
 // INFO
 // - flow of the data
+
+// function kopieren aus specieslist + dann filtern über die cards und nicht über die Tabelle

@@ -5,10 +5,67 @@
     align-items: center;
     justify-content: center;
     align-content: center; */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center;
+    align-content: center; */ 
+    padding: 10px;
+    height: 100%;
+
 }; 
 
 .btn {
- justify-items: center;  
- align-items: end;
- align-content: end; 
+    width: 100%;
 }
+
+/* Bild-Styling */
+.card img {
+    width: 100%; /* Bild passt sich der Breite der Karte an */
+    height: auto; /* Beibehaltung des Seitenverhältnisses */
+    border-radius: 5px; /* Abgerundete Ecken für das Bild */
+    margin-bottom: 10px; /* Abstand zum Text */
+  }
+  
+  /* Styling des Karteninhalts */
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center; /* Zentrierung der Text- und Button-Elemente */
+    text-align: center;
+    /* padding: 10px; */
+  }
+  
+  /* Button-Styling */
+  .card .btn {
+    margin-top: 10px; /* Abstand nach oben für den Button */
+    padding: 8px 16px; /* Padding für den Button */
+    border: none; /* Kein Rand */
+    border-radius: 5px; /* Abgerundete Ecken für den Button */
+    text-decoration: none; /* Entfernen der Standard-Unterstreichung */
+    display: inline-block; /* Damit der Button als Block angezeigt wird */
+    justify-items: center;  
+    align-items: end;
+    align-content: end; 
+  }
+  
+  .card .btn:hover {
+    background-color: #0056b3; /* Dunklerer Farbton beim Hover */
+    cursor: pointer; /* Zeigt einen Zeiger beim Hover */
+  }
+  
+  /* Anpassung der Kartencontainer */
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly; /* Gleiche Verteilung der Karten */
+  }
+  
+  /* Um kleinere Bildschirme zu unterstützen (z.B. mobile Geräte) */
+  @media (max-width: 768px) {
+    .card {
+      width: 100%; /* Karten auf die volle Breite setzen */
+      margin: 5px;
+    }
+  }

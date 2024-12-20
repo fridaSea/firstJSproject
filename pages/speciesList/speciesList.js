@@ -11,8 +11,9 @@ function getData() {
       const animals = result.data;
 
       console.log("animals:", animals);
-      buildMyCards(animals);
+      //buildMyCards(animals); // rausnehmen, da es in der controller function aufgerufen wird
       displayAnimals(animals);
+      controller(animals);
     })
     .catch((error) => {
       console.log("error:>>", error);
@@ -27,7 +28,7 @@ function getData() {
 
 function buildMyCards(animals) {
   console.log("animals :>> ", animals);
-  const commonNamesContainer = document.querySelector("body");
+  const commonNamesContainer = document.querySelector("row"); //NEW Row statt container
 
   // for (let i = 0; i < animals.length; i++) {
   //   // console.log("animals[i] :>> ", animals[i]);
@@ -55,6 +56,9 @@ getData();
 //console.log(animals);
 
 const displayAnimals = (animals) => {
+  const cardsContainer = document.querySelector(".row"); // toatally forgot about the "cardsContainer" from the .html
+  cardsContainer.innerHTML = ""; // NEW leere den container bevor neue karten hinzugefügt werden. ohne diese zeile sind immer alle da
+
   // Animals Array alphabetisch sortieren
   animals.sort((a, b) => {
     if (a.commonName < b.commonName) return -1;
@@ -62,8 +66,7 @@ const displayAnimals = (animals) => {
     return 0;
   });
 
-  const cardsContainer = document.querySelector(".row"); // toatally forgot about the "cardsContainer" from the .html
-
+  // Karten für jedes Tier erstellen
   for (let i = 0; i < animals.length; i++) {
     const cardContainer = document.createElement("div");
     cardContainer.setAttribute("class", "card");
@@ -144,6 +147,103 @@ const displayAnimals = (animals) => {
 //   </div>
 // </div>
 
+//NEW
+// 3. Generate Dropdown
+const createDropDown = (animals) => {
+  const dropdown = document.getElementById("locationDropdown");
+
+  // console.log("animalsDropdown:", animals); // works
+  //NEW
+  // Stelle sicher, dass die Option "All Locations" hinzugefügt wird /// TO DO - ich möchte das bei ALL immer alle angezeigt werden, z.b. ganz an anfang wenn man auf die Seite kommt
+  const allOption = document.createElement("option");
+  allOption.value = "All Locations";
+  allOption.innerText = "All Locations";
+  dropdown.appendChild(allOption);
+
+  // Sortiere das Array der Tiere alphabetisch nach der Location
+  animals.sort((a, b) => {
+    if (a.location < b.location) return -1;
+    if (a.location > b.location) return 1;
+    return 0;
+  });
+
+  // Erstelle die Dropdown Optionen für jede Location
+  const locations = animals.map((animal) => {
+    return animal.location;
+  });
+  // console.log("locations:>>", locations); // I created an array with the locations of the animals, still repeated (804)
+  //const uniqueLocationsArray = new Set(locations); // It created a set, which I don`t want because I am not able to loop over it -> I need to transform this into an array (480)
+  const uniqueLocationsArray = [...new Set(locations)]; // now I have an array with unique locations (480). No I am no longer loop over the animals but over uniqueLocationsArray and I don`t need to access any properties
+  //console.log("uniqueLocationsArray:>>", uniqueLocationsArray); -> wird gedruckt
+
+  for (let i = 0; i < uniqueLocationsArray.length; i++) {
+    const option = document.createElement("option"); // for every animals I want to generate a dropdown element - created the element
+    option.innerText = uniqueLocationsArray[i]; // what`s going to be the text of the option? - have the text
+    option.value = uniqueLocationsArray[i];
+    dropdown.appendChild(option);
+  }
+};
+
+// 4. make control functions
+// - a control function is usually in control of calling the different functions that make our code run
+// - when you are doing this, you try to put all the functions in one place and your code will be much easiert to debug, to scale etc.
+// the first function that has to run here is the fetch function because it needs to get the data
+// this controller is  kind of a control center to  handle everything that is going on in my code
+
+function controller(animals) {
+  // get the data
+  //
+  // build CARDS (table) with data
+  buildMyCards(animals);
+  // generate Dropdown filter options
+  createDropDown(animals);
+  // create filter functions
+  setEventListener(animals);
+  // set event listeners
+  filterByDropDown(animals);
+}
+
+// 5. ADD EVENT LISTENERS
+const setEventListener = (animals) => {
+  const locationListDropdown = document.querySelector("#locationDropdown"); // FRAGE: WARUM KOMMT HIER EIN # DAVOR? -> weil bezogen auf css/ ich könnte auch schreiben mit getelementbyid, dann aber ohen #
+  locationListDropdown.addEventListener("change", () => {
+    //console.log("location selected");
+    filterByDropDown(animals); // FRAGE: WARUM PACKE ICH DAS HIER UNTEN REIN UND NICHT WIE DAS ANDERE OBEN?
+  });
+};
+
+// ///ALTERNATIVE, DIE ICH HIER ABER AUCH NICHT NUTZEN SOLLTE  - FRAGE - FUNKTIONIERT NICHT GANZ; DA ES DEN CONSOLE:LOG NICHT HOCH ZÄHLT WENN ICH MEHRMALS KLICKE
+// const setEventListener = () => {
+//   const locationListDropdown = document.querySelector("#locationDropdown"); // FRAGE: WARUM KOMMT HIER EIN # DAVOR?
+//   locationListDropdown.addEventListener("change", filterByDropDown);
+//   console.log("location selected");
+// };
+
+// 6. FILTER BY DROPDOWN
+
+const filterByDropDown = (animals) => {
+  //console.log("animal location in Filter:>>", animals); // it works
+  // get drowndown value
+  //console.log("filtering by dropdown"); // it works
+  const selectedLocation = document.querySelector("#locationDropdown").value;
+  //console.log("selectedLocation:>>", selectedLocation);
+  //NEW
+  // Wenn der Wert des Dropdowns "All Locations" oder ein leerer Wert ist, zeige alle Tiere an
+  if (selectedLocation === "All Locations" || !selectedLocation) {
+    displayAnimals(animals); // Zeige alle Tiere an, wenn "All locations" ausgewählt ist
+  } else {
+    // FILTERt die tiere nach dem ausgewählten standort
+    const filteredLocations = animals.filter(
+      (animal) => animal.location === selectedLocation
+    );
+    displayAnimals(filteredLocations);
+  }
+  //console.log("filteredLocations:>>", filteredLocations); // it works. je nach auswahl bekomme ich unterschieldich viele ergebnisse angezeigt
+  // hier muss ich die oben erstellte Tabelle noch mit den gefilterten Locations aufrufen
+};
+
+// Initiales Laden der Daten
+getData();
 // Infos zur Sort():
 // sort(): Das sort()-Array wird mit einer Vergleichsfunktion verwendet, die die commonName-Eigenschaft der Tiere vergleicht. Dies stellt sicher, dass die Tiere alphabetisch nach ihrem commonName sortiert werden.
 
