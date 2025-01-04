@@ -12,7 +12,7 @@ function getData() {
 
       console.log("animals:", animals);
       //buildMyCards(animals); // rausnehmen, da es in der controller function aufgerufen wird
-      displayAnimals(animals);
+      // displayAnimals(animals);
       controller(animals);
     })
     .catch((error) => {
@@ -26,20 +26,18 @@ function getData() {
 
 // // SETUP OF THE CARDS
 
-function buildMyCards(animals) {
-  console.log("animals :>> ", animals);
-  const commonNamesContainer = document.querySelector("row"); //NEW Row statt container
+// function buildMyCards(animals) {
+//   console.log("animals :>> ", animals);
+//   const commonNamesContainer = document.querySelector(".row"); //NEW Row statt container
 
-  // for (let i = 0; i < animals.length; i++) {
-  //   // console.log("animals[i] :>> ", animals[i]);
-  //   const animalCommonName = document.createElement("p");
-  //   animalCommonName.innerText = animals[i].commonName;
+//   // for (let i = 0; i < animals.length; i++) {
+//   //   // console.log("animals[i] :>> ", animals[i]);
+//   //   const animalCommonName = document.createElement("p");
+//   //   animalCommonName.innerText = animals[i].commonName;
 
-  //   commonNamesContainer.appendChild(animalCommonName);
-  // }
-}
-
-getData();
+//   //   commonNamesContainer.appendChild(animalCommonName);
+//   // }
+// }
 
 // CARDS
 {
@@ -57,13 +55,13 @@ getData();
 
 const displayAnimals = (animals) => {
   const cardsContainer = document.querySelector(".row"); // toatally forgot about the "cardsContainer" from the .html
-  cardsContainer.innerHTML = ""; // NEW leere den container bevor neue karten hinzugefügt werden. ohne diese zeile sind immer alle da
+  cardsContainer.innerHTML = ""; // NEW leere den container bevor neue karten hinzugefügt werden. ohne diese zeile sind immer alle da + alle, die per filter unten dran gehängt werden
 
   // Animals Array alphabetisch sortieren
   animals.sort((a, b) => {
-    if (a.commonName < b.commonName) return -1;
-    if (a.commonName > b.commonName) return 1;
-    return 0;
+    if (a.commonName < b.commonName) return -1; //element wird vor das andere gesetzt
+    if (a.commonName > b.commonName) return 1; // element wird dahinter gesetzt
+    return 0; //sind schon richtig sortiert, es ändert sich nichts
   });
 
   // Karten für jedes Tier erstellen
@@ -76,22 +74,30 @@ const displayAnimals = (animals) => {
     //cardContainer.setAttribute("style", "width: 18rem");
 
     const cardImage = document.createElement("img");
-    cardImage.setAttribute("src", animals[i].imageSrc); // want to have it for every element of the array
-    cardImage.setAttribute("alt", "Image of an extincted animal");
+
     // HERE IF CONDITION EINFÜGEN FÜR DIE ANIMALS WELCHE KEIN BILD HABEN??? If ("imageSrc": "false",) insert "no pic(from assets)"
 
     console.log("animals[i]image :>>", animals[i].imageSrc);
     //-> das passt, hier werden in der Konsole entweder die Links ausgegebn oder false
     if (animals[i].imageSrc && animals[i].imageSrc !== "false") {
       cardImage.setAttribute("src", animals[i].imageSrc);
+      cardImage.setAttribute("alt", "Image of " + animals[i].commonName);
 
       cardImage.addEventListener("error", function (error) {
         //console.log("Image load fail", error, animals[i]);
         cardImage.setAttribute("src", "/assets/no_pic-32.png");
+        cardImage.setAttribute(
+          "alt",
+          "No image available for " + animals[i].commonName
+        );
       });
     } else {
       //console.log("Platzhalterbild wird gesetzt"); // Hierbei wurd angezeigt, dass für 220 Tiere der Text gesetzt wird, was so auch stimmt mit den angaben von der API - auf der website wird mir aber immer noch kein platzhalterbild angezeigt
       cardImage.setAttribute("src", "/assets/no_pic-32.png");
+      cardImage.setAttribute(
+        "alt",
+        "No image available for " + animals[i].commonName
+      );
       // const cardImage = document.createElement("img");
       // cardImage.setAttribute("src", "assets/no_pic-32.png"); // want to have it for every element of the array
       // cardImage.setAttribute("alt", "Platzhalter ");
@@ -104,10 +110,11 @@ const displayAnimals = (animals) => {
 
     const cardTitle = document.createElement("h5");
     cardTitle.setAttribute("class", "card-title");
-    cardTitle.innerText = animals[i].commonName;
+    // cardTitle.innerText = animals[i].commonName;
 
     if (animals[i].commonName && animals[i].commonName !== "false") {
-      cardTitle.setAttribute("src", animals[i].commonName);
+      // cardTitle.setAttribute("src", animals[i].commonName);
+      cardTitle.innerText = animals[i].commonName;
     } else {
       //console.log("Common Name unknown");
       cardTitle.innerText = "Unknown";
@@ -156,7 +163,7 @@ const createDropDown = (animals) => {
   //NEW
   // Stelle sicher, dass die Option "All Locations" hinzugefügt wird /// TO DO - ich möchte das bei ALL immer alle angezeigt werden, z.b. ganz an anfang wenn man auf die Seite kommt
   const allOption = document.createElement("option");
-  allOption.value = "All Locations";
+  allOption.value = "all";
   allOption.innerText = "All Locations";
   dropdown.appendChild(allOption);
 
@@ -194,7 +201,7 @@ function controller(animals) {
   // get the data
   //
   // build CARDS (table) with data
-  buildMyCards(animals);
+  // buildMyCards(animals);
   // generate Dropdown filter options
   createDropDown(animals);
   // create filter functions
@@ -203,7 +210,7 @@ function controller(animals) {
   filterByDropDown(animals);
 }
 
-// 5. ADD EVENT LISTENERS
+// 5. ADD EVENT LISTENERS //setDropdownEventListener UMBENENNEN FÜR NÄCHSTE FILTER !!!!
 const setEventListener = (animals) => {
   const locationListDropdown = document.querySelector("#locationDropdown"); // FRAGE: WARUM KOMMT HIER EIN # DAVOR? -> weil bezogen auf css/ ich könnte auch schreiben mit getelementbyid, dann aber ohen #
   locationListDropdown.addEventListener("change", () => {
@@ -220,7 +227,6 @@ const setEventListener = (animals) => {
 // };
 
 // 6. FILTER BY DROPDOWN
-
 const filterByDropDown = (animals) => {
   //console.log("animal location in Filter:>>", animals); // it works
   // get drowndown value
@@ -229,7 +235,7 @@ const filterByDropDown = (animals) => {
   //console.log("selectedLocation:>>", selectedLocation);
   //NEW
   // Wenn der Wert des Dropdowns "All Locations" oder ein leerer Wert ist, zeige alle Tiere an
-  if (selectedLocation === "All Locations" || !selectedLocation) {
+  if (selectedLocation === "all" || !selectedLocation) {
     displayAnimals(animals); // Zeige alle Tiere an, wenn "All locations" ausgewählt ist
   } else {
     // FILTERt die tiere nach dem ausgewählten standort
@@ -251,3 +257,5 @@ getData();
 // a.commonName > b.commonName gibt 1 zurück, was bedeutet, dass b vor a kommt.
 // Wenn die commonName-Werte gleich sind, gibt die Funktion 0 zurück.
 // Fehlende oder ungültige commonName-Werte: Im Fall eines fehlenden oder ungültigen commonName kannst du eine Standardbezeichnung wie "Unknown" setzen (falls noch nicht geschehen).
+
+// ALLE die kein BILD UND kein Titel/ common name  haben, sollen nicht angezeigt werden
