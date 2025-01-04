@@ -197,6 +197,54 @@ const createDropDown = (animals) => {
 // the first function that has to run here is the fetch function because it needs to get the data
 // this controller is  kind of a control center to  handle everything that is going on in my code
 
+// Search Button
+// Set an event listener to the button
+
+function createSearch(animals) {
+  const searchButton = document.getElementById("searchButton");
+
+  searchButton.addEventListener("click", function () {
+    filterBySearchInput(animals);
+  });
+
+  document
+    .querySelector("#searchInput")
+    .addEventListener("keyup", function (keyPressEvent) {
+      if (keyPressEvent.code === "Enter") {
+        filterBySearchInput(animals);
+      }
+    });
+
+  //wenn ich folgende funktion nutzen öchte, muss der search button raus, weil nicht mehr benötigt
+  // document
+  //   .querySelector("#searchInput")
+  //   .addEventListener("input", function (keyPressEvent) {
+  //     filterBySearchInput(animals);
+  //   });
+}
+
+// Filter by Search Input
+const filterBySearchInput = (animals) => {
+  const searchQuery = document.querySelector("#searchInput").value;
+  //console.log("selectedLocation:>>", selectedLocation);
+
+  const filteredAnimals = animals.filter((animal) => {
+    if (
+      searchQuery.length === 0 ||
+      animal.commonName.toLowerCase().match(searchQuery.toLowerCase()) ||
+      animal.location.toLowerCase().match(searchQuery.toLowerCase())
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  displayAnimals(filteredAnimals);
+
+  //console.log("filteredLocations:>>", filteredLocations); // it works. je nach auswahl bekomme ich unterschieldich viele ergebnisse angezeigt
+  // hier muss ich die oben erstellte Tabelle noch mit den gefilterten Locations aufrufen
+};
+
 function controller(animals) {
   // get the data
   //
@@ -208,6 +256,8 @@ function controller(animals) {
   setEventListener(animals);
   // set event listeners
   filterByDropDown(animals);
+  //Search
+  createSearch(animals);
 }
 
 // 5. ADD EVENT LISTENERS //setDropdownEventListener UMBENENNEN FÜR NÄCHSTE FILTER !!!!
@@ -259,3 +309,5 @@ getData();
 // Fehlende oder ungültige commonName-Werte: Im Fall eines fehlenden oder ungültigen commonName kannst du eine Standardbezeichnung wie "Unknown" setzen (falls noch nicht geschehen).
 
 // ALLE die kein BILD UND kein Titel/ common name  haben, sollen nicht angezeigt werden
+
+// !!! BEIDE FILTER MITIENADER VERKNÜPFEN; SODASS ich z.B. nur Mäuse aus neu seeland suchen kann
