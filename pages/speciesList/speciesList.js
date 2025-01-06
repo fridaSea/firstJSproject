@@ -24,34 +24,7 @@ function getData() {
 //console.log("animals:", animals);
 //console.log(getData); // Check the structure of the animals array in the console
 
-// // SETUP OF THE CARDS
-
-// function buildMyCards(animals) {
-//   console.log("animals :>> ", animals);
-//   const commonNamesContainer = document.querySelector(".row"); //NEW Row statt container
-
-//   // for (let i = 0; i < animals.length; i++) {
-//   //   // console.log("animals[i] :>> ", animals[i]);
-//   //   const animalCommonName = document.createElement("p");
-//   //   animalCommonName.innerText = animals[i].commonName;
-
-//   //   commonNamesContainer.appendChild(animalCommonName);
-//   // }
-// }
-
 // CARDS
-{
-  /* <div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div> */
-}
-
-//console.log(animals);
 
 const displayAnimals = (animals) => {
   const cardsContainer = document.querySelector(".row"); // toatally forgot about the "cardsContainer" from the .html
@@ -75,9 +48,7 @@ const displayAnimals = (animals) => {
 
     const cardImage = document.createElement("img");
 
-    // HERE IF CONDITION EINFÜGEN FÜR DIE ANIMALS WELCHE KEIN BILD HABEN??? If ("imageSrc": "false",) insert "no pic(from assets)"
-
-    console.log("animals[i]image :>>", animals[i].imageSrc);
+    // console.log("animals[i]image :>>", animals[i].imageSrc);
     //-> das passt, hier werden in der Konsole entweder die Links ausgegebn oder false
     if (animals[i].imageSrc && animals[i].imageSrc !== "false") {
       cardImage.setAttribute("src", animals[i].imageSrc);
@@ -141,20 +112,6 @@ const displayAnimals = (animals) => {
 
 // Using Grid (Stacked horizontal) to display the Cards
 
-// Bootstrap Vorlage:
-// <div class="container text-center">
-//   <div class="row">
-//     <div class="col-sm-8">col-sm-8</div>
-//     <div class="col-sm-4">col-sm-4</div>
-//   </div>
-//   <div class="row">
-//     <div class="col-sm">col-sm</div>
-//     <div class="col-sm">col-sm</div>
-//     <div class="col-sm">col-sm</div>
-//   </div>
-// </div>
-
-//NEW
 // 3. Generate Dropdown
 const createDropDown = (animals) => {
   const dropdown = document.getElementById("locationDropdown");
@@ -191,12 +148,6 @@ const createDropDown = (animals) => {
   }
 };
 
-// 4. make control functions
-// - a control function is usually in control of calling the different functions that make our code run
-// - when you are doing this, you try to put all the functions in one place and your code will be much easiert to debug, to scale etc.
-// the first function that has to run here is the fetch function because it needs to get the data
-// this controller is  kind of a control center to  handle everything that is going on in my code
-
 // Search Button
 // Set an event listener to the button
 
@@ -204,14 +155,16 @@ function createSearch(animals) {
   const searchButton = document.getElementById("searchButton");
 
   searchButton.addEventListener("click", function () {
-    filterBySearchInput(animals);
+    //filterBySearchInput(animals);
+    combinedFilters(animals);
   });
 
   document
     .querySelector("#searchInput")
     .addEventListener("keyup", function (keyPressEvent) {
       if (keyPressEvent.code === "Enter") {
-        filterBySearchInput(animals);
+        // filterBySearchInput(animals);
+        combinedFilters(animals);
       }
     });
 
@@ -222,6 +175,38 @@ function createSearch(animals) {
   //     filterBySearchInput(animals);
   //   });
 }
+
+// 5. ADD EVENT LISTENERS //setDropdownEventListener UMBENENNEN FÜR NÄCHSTE FILTER !!!!
+const setEventListener = (animals) => {
+  const locationListDropdown = document.querySelector("#locationDropdown"); // FRAGE: WARUM KOMMT HIER EIN # DAVOR? -> weil bezogen auf css/ ich könnte auch schreiben mit getelementbyid, dann aber ohen #
+  locationListDropdown.addEventListener("change", () => {
+    //console.log("location selected", locationListDropdown.value);
+    //filterByDropDown(animals); // FRAGE: WARUM PACKE ICH DAS HIER UNTEN REIN UND NICHT WIE DAS ANDERE OBEN?
+    combinedFilters(animals);
+  });
+};
+
+// 6. FILTER BY DROPDOWN
+const filterByDropDown = (animals) => {
+  //console.log("animal location in Filter:>>", animals); // it works
+  // get drowndown value
+  //console.log("filtering by dropdown"); // it works
+  const selectedLocation = document.querySelector("#locationDropdown").value;
+  //console.log("selectedLocation:>>", selectedLocation);
+  //NEW
+  // Wenn der Wert des Dropdowns "All Locations" oder ein leerer Wert ist, zeige alle Tiere an
+  if (selectedLocation === "all" || !selectedLocation) {
+    displayAnimals(animals); // Zeige alle Tiere an, wenn "All locations" ausgewählt ist
+  } else {
+    // FILTER die tiere nach dem ausgewählten standort
+    const filteredLocations = animals.filter(
+      (animal) => animal.location === selectedLocation
+    );
+    displayAnimals(filteredLocations);
+  }
+  //console.log("filteredLocations:>>", filteredLocations); // it works. je nach auswahl bekomme ich unterschieldich viele ergebnisse angezeigt
+  // hier muss ich die oben erstellte Tabelle noch mit den gefilterten Locations aufrufen
+};
 
 // Filter by Search Input
 const filterBySearchInput = (animals) => {
@@ -245,6 +230,43 @@ const filterBySearchInput = (animals) => {
   // hier muss ich die oben erstellte Tabelle noch mit den gefilterten Locations aufrufen
 };
 
+const animalMatchesLocation = (animal) => {
+  const selectedLocation = document.querySelector("#locationDropdown").value;
+  return (
+    !selectedLocation ||
+    selectedLocation === "all" ||
+    animal.location === selectedLocation
+  );
+};
+
+const animalMatchesSearchQuery = (animal) => {
+  const searchQuery = document.querySelector("#searchInput").value;
+  return (
+    searchQuery.length === 0 ||
+    animal.commonName.toLowerCase().match(searchQuery.toLowerCase()) ||
+    animal.location.toLowerCase().match(searchQuery.toLowerCase())
+  );
+};
+
+// Combine both filters
+const combinedFilters = (animals) => {
+  // // console.log("combined filters working");
+  // const selectedLocation = document.querySelector("#locationDropdown").value;
+  // const searchQuery = document.querySelector("#searchInput").value;
+
+  const filteredAnimals = animals.filter((animal) => {
+    return animalMatchesLocation(animal) && animalMatchesSearchQuery(animal);
+  });
+
+  displayAnimals(filteredAnimals);
+};
+
+// 4. make control functions
+// - a control function is usually in control of calling the different functions that make our code run
+// - when you are doing this, you try to put all the functions in one place and your code will be much easiert to debug, to scale etc.
+// the first function that has to run here is the fetch function because it needs to get the data
+// this controller is  kind of a control center to  handle everything that is going on in my code
+
 function controller(animals) {
   // get the data
   //
@@ -260,44 +282,6 @@ function controller(animals) {
   createSearch(animals);
 }
 
-// 5. ADD EVENT LISTENERS //setDropdownEventListener UMBENENNEN FÜR NÄCHSTE FILTER !!!!
-const setEventListener = (animals) => {
-  const locationListDropdown = document.querySelector("#locationDropdown"); // FRAGE: WARUM KOMMT HIER EIN # DAVOR? -> weil bezogen auf css/ ich könnte auch schreiben mit getelementbyid, dann aber ohen #
-  locationListDropdown.addEventListener("change", () => {
-    //console.log("location selected");
-    filterByDropDown(animals); // FRAGE: WARUM PACKE ICH DAS HIER UNTEN REIN UND NICHT WIE DAS ANDERE OBEN?
-  });
-};
-
-// ///ALTERNATIVE, DIE ICH HIER ABER AUCH NICHT NUTZEN SOLLTE  - FRAGE - FUNKTIONIERT NICHT GANZ; DA ES DEN CONSOLE:LOG NICHT HOCH ZÄHLT WENN ICH MEHRMALS KLICKE
-// const setEventListener = () => {
-//   const locationListDropdown = document.querySelector("#locationDropdown"); // FRAGE: WARUM KOMMT HIER EIN # DAVOR?
-//   locationListDropdown.addEventListener("change", filterByDropDown);
-//   console.log("location selected");
-// };
-
-// 6. FILTER BY DROPDOWN
-const filterByDropDown = (animals) => {
-  //console.log("animal location in Filter:>>", animals); // it works
-  // get drowndown value
-  //console.log("filtering by dropdown"); // it works
-  const selectedLocation = document.querySelector("#locationDropdown").value;
-  //console.log("selectedLocation:>>", selectedLocation);
-  //NEW
-  // Wenn der Wert des Dropdowns "All Locations" oder ein leerer Wert ist, zeige alle Tiere an
-  if (selectedLocation === "all" || !selectedLocation) {
-    displayAnimals(animals); // Zeige alle Tiere an, wenn "All locations" ausgewählt ist
-  } else {
-    // FILTERt die tiere nach dem ausgewählten standort
-    const filteredLocations = animals.filter(
-      (animal) => animal.location === selectedLocation
-    );
-    displayAnimals(filteredLocations);
-  }
-  //console.log("filteredLocations:>>", filteredLocations); // it works. je nach auswahl bekomme ich unterschieldich viele ergebnisse angezeigt
-  // hier muss ich die oben erstellte Tabelle noch mit den gefilterten Locations aufrufen
-};
-
 // Initiales Laden der Daten
 getData();
 // Infos zur Sort():
@@ -307,7 +291,8 @@ getData();
 // a.commonName > b.commonName gibt 1 zurück, was bedeutet, dass b vor a kommt.
 // Wenn die commonName-Werte gleich sind, gibt die Funktion 0 zurück.
 // Fehlende oder ungültige commonName-Werte: Im Fall eines fehlenden oder ungültigen commonName kannst du eine Standardbezeichnung wie "Unknown" setzen (falls noch nicht geschehen).
-
+// kleine Datein mit wenig Code + gute Benennung von Funktionen und Dateien
 // ALLE die kein BILD UND kein Titel/ common name  haben, sollen nicht angezeigt werden
 
-// !!! BEIDE FILTER MITIENADER VERKNÜPFEN; SODASS ich z.B. nur Mäuse aus neu seeland suchen kann
+// !!! KEINE ERGEBNISSE GEFUNDEN integrieren
+// GO somewhere - auf eine neue seite verlinken / Tier id hinterlegen
