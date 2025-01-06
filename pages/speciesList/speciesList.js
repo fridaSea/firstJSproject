@@ -1,24 +1,24 @@
 // Daten per API abrufen = This is the structure that has to be build in order to get data from a server !!!
-function getData() {
-  fetch("https://extinct-api.herokuapp.com/api/v1/animal/804")
-    .then((response) => {
-      console.log("response:>>", response); // Paket kommt an mit Status (Erfolgsstaus oder Fehlerstatus)
-      return response.json(); // Paket wird aufgemacht und ich sehe den Inhalt, verarbeite den Inhalt und verpacke die Inhalte in einem json)
-    })
-    .then((result) => {
-      console.log("result:", result);
-      // const animals = data.data;
-      const animals = result.data;
+// function getData() {
+//   fetch("https://extinct-api.herokuapp.com/api/v1/animal/804")
+//     .then((response) => {
+//       console.log("response:>>", response); // Paket kommt an mit Status (Erfolgsstaus oder Fehlerstatus)
+//       return response.json(); // Paket wird aufgemacht und ich sehe den Inhalt, verarbeite den Inhalt und verpacke die Inhalte in einem json)
+//     })
+//     .then((result) => {
+//       console.log("result:", result);
+//       // const animals = data.data;
+//       const animals = result.data;
 
-      console.log("animals:", animals);
-      //buildMyCards(animals); // rausnehmen, da es in der controller function aufgerufen wird
-      // displayAnimals(animals);
-      controller(animals);
-    })
-    .catch((error) => {
-      console.log("error:>>", error);
-    });
-}
+//       console.log("animals:", animals);
+//       //buildMyCards(animals); // rausnehmen, da es in der controller function aufgerufen wird
+//       // displayAnimals(animals);
+//       controller(animals);
+//     })
+//     .catch((error) => {
+//       console.log("error:>>", error);
+//     });
+// }
 
 //getData(); // Works. it shows the response and the data
 //console.log("animals:", animals);
@@ -98,7 +98,10 @@ const displayAnimals = (animals) => {
 
     const cardButton = document.createElement("a");
     cardButton.setAttribute("class", "btn btn-secondary");
-    cardButton.setAttribute("href", "#"); // TO DO - Verlinkung noch hinzufügen
+    cardButton.setAttribute(
+      "href",
+      "/pages/animal/animal.html#" + animals[i].commonName // alles was hinter dem # kommt, ist dem browser egal. es ist ein anker.
+    ); // TO DO - Verlinkung noch hinzufügen
     cardButton.innerText = "Go somewhere";
 
     //cardBody.appendChild(cardDescription);
@@ -283,7 +286,9 @@ function controller(animals) {
 }
 
 // Initiales Laden der Daten
-getData();
+getData((animals) => {
+  controller(animals);
+});
 // Infos zur Sort():
 // sort(): Das sort()-Array wird mit einer Vergleichsfunktion verwendet, die die commonName-Eigenschaft der Tiere vergleicht. Dies stellt sicher, dass die Tiere alphabetisch nach ihrem commonName sortiert werden.
 
