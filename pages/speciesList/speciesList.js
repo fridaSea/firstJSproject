@@ -297,7 +297,7 @@ getData((animals) => {
 // Wenn die commonName-Werte gleich sind, gibt die Funktion 0 zurück.
 // Fehlende oder ungültige commonName-Werte: Im Fall eines fehlenden oder ungültigen commonName kannst du eine Standardbezeichnung wie "Unknown" setzen (falls noch nicht geschehen).
 // kleine Datein mit wenig Code + gute Benennung von Funktionen und Dateien
-// ALLE die kein BILD UND kein Titel/ common name  haben, sollen nicht angezeigt werden
 
+// ALLE die kein BILD UND kein Titel/ common name  haben, sollen nicht angezeigt werden
 // !!! KEINE ERGEBNISSE GEFUNDEN integrieren
-// GO somewhere - auf eine neue seite verlinken / Tier id hinterlegen
+// load more image by scrolling - https://webdesign.tutsplus.com/how-to-implement-infinite-scrolling-with-javascript--cms-37055t

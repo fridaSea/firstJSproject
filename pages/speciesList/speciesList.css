@@ -1,6 +1,6 @@
 .card {
     background-color: aliceblue !important;
-    margin: 10px;
+    margin: 25px;
     /* justify-items: center;
     align-items: center;
     justify-content: center;
@@ -61,7 +61,43 @@
     flex-wrap: wrap;
     justify-content: space-evenly; /* Gleiche Verteilung der Karten */
   }
-  
+/*   
+.searcharea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+} */
+
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  width: auto;
+  gap: 10px;
+}
+
+.searchLocation{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  width: auto;
+}
+
+.searchfield{
+  width: 400px;
+  padding: 5px;
+  font-size: 15px;
+}
+
+/* #locationDropdown {
+  margin-left: 10px;
+} */
+
   /* Um kleinere Bildschirme zu unterstützen (z.B. mobile Geräte) */
   @media (max-width: 768px) {
     .card {

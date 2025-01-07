@@ -8,8 +8,20 @@
 
 body{
     font-family: 'Windows 95' !important;
-    text-align: justify; /*eingefügt aus dem button video
-    max-width: 600px; /*eingefügt aus dem button video
+   /* text-align: justify; eingefügt aus dem button video*/
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   /* align-items: center;
+   align-content: center; */
+   padding-left: 45px;
+   padding-right: 45px;
+   padding-top: 15px;
+   padding-bottom: 15px;
+   position: relative;
+   min-height: 100vh;
+
+    /*max-width: 600px; /*eingefügt aus dem button video
     margin: 0 auto; /*eingefügt aus dem button video
     /* grid-template-columns: 1fr;
     grid-template-rows: auto; */
@@ -23,9 +35,17 @@ body{
     justify-content: center;
     align-items: center;
     align-content: center;
-    gap: 30px;
+    gap: auto; 
+    margin-left: 200px;  
+    margin-right: 200px;
 }
 /* warum werden diese einstellungen nicht übernommen? sondern nur die von navbar aus pixel.css*/
+
+.hero {
+    padding: 30px !important; 
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
 
 
 h1{
@@ -41,11 +61,22 @@ h1{
 }
 
 .read-more-btn{
-     padding: 15px 60px; /*padding left & right  */
-     /* kann noch weiter gestyled werden:background-color: / color: / font-size / cursor:pointer ;;  */
-     border: none;
-     outline: none;
-}
+    
+    /* kann noch weiter gestyled werden:background-color: / color: / font-size / cursor:pointer ;;  */
+    /* border: none;
+    outline: none; */
+    color: #000;
+    background-color: #c0c0c0;
+    border-color: #a0a0a0;
+    position:relative;
+    /* letter-spacing: 0.025em; */
+    /* font-size: .6rem; */
+    border-radius: 0.125rem;
+    padding: .6rem 2rem;
+    margin-bottom: 1.5rem;
+    margin-right: 1.5rem;
+    border-radius: 5px;
+} 
 
 .text.show-more .moreText{
     display:inline;
@@ -57,24 +88,40 @@ h1{
 }
 /* whenever we will have the "show more" in our text, I want to dissapear the dots  */
 
-.footer{
+.footer {
     display: flex;
     gap: 105px;
-    justify-items: center;
-    align-items: center;
     justify-content: center;
-    align-content: center;
-
+    align-items: center;
+    /* justify-items: center;
+    align-content: center; */
+    height: 100%;
+    position:relative;
+    /* bottom: 0; */
+    margin-top: auto;
 }
 
 .socialIcons{
 
 }
 
+.navbar a.active{
+    background-color: rgb(165, 255, 240);
+    border-radius: 10px;
+}
+
+.main{
+    margin-left: 3rem;
+    margin-right: 3rem;
+}
+
+.action {
+    margin-top: 4.5rem;
+}
+
 /*
 hero
 main 
-action
 - new file - bootstraptheme.css überschriebenen bootstrap sachen SAHNEHÄUBCHEN
 */
 

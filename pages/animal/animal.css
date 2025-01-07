@@ -1,0 +1,31 @@
+.container{
+    background-color: aliceblue !important;
+    margin: 25px;
+    display: flex;
+    /* justify-items: center; */
+    align-items: center;
+    justify-content: center;
+    /* align-content: center;  */
+    /* justify-content: center; */
+    /* align-items: center;
+    align-content: center; */ 
+    padding: 10px;
+    height: 100%;
+    border-radius: 20px;
+
+}
+
+.container img {
+    width: 35%; /* Bild passt sich der Breite der Karte an */
+    height: 10%; /* Beibehaltung des Seitenverhältnisses */
+    border-radius: 5px; /* Abgerundete Ecken für das Bild */
+    margin-bottom: 10px; /* Abstand zum Text */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Zentrierung der Text- und Button-Elemente */
+    text-align: center;
+}
+
+p{
+    text-align: center;
+}
