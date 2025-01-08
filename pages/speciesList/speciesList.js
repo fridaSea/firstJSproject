@@ -30,6 +30,9 @@ const displayAnimals = (animals) => {
   const cardsContainer = document.querySelector(".row"); // toatally forgot about the "cardsContainer" from the .html
   cardsContainer.innerHTML = ""; // NEW leere den container bevor neue karten hinzugefügt werden. ohne diese zeile sind immer alle da + alle, die per filter unten dran gehängt werden
 
+  const resultsContainer = document.querySelector(".noResult"); // Dein Container, der die Ergebnisse anzeigt
+  resultsContainer.innerHTML = ""; // NEW leere den container bevor neue karten hinzugefügt werden.
+
   // Animals Array alphabetisch sortieren
   animals.sort((a, b) => {
     if (a.commonName < b.commonName) return -1; //element wird vor das andere gesetzt
@@ -91,20 +94,14 @@ const displayAnimals = (animals) => {
       cardTitle.innerText = "Unknown";
     }
 
-    // cardDescription lasse ich erst einmal raus, da es mir zu viel ist auf den Karten -> vielleicht die Description dort hinterlegen, wo mit dem Button hin verlinbkt werden kann TO DO
-    // const cardDescription = document.createElement("p");
-    // cardDescription.setAttribute("class", "card-text");
-    // cardDescription.innerText = animals[i].shortDesc;
-
     const cardButton = document.createElement("a");
     cardButton.setAttribute("class", "btn btn-secondary");
     cardButton.setAttribute(
       "href",
       "/pages/animal/animal.html#" + animals[i].commonName // alles was hinter dem # kommt, ist dem browser egal. es ist ein anker.
-    ); // TO DO - Verlinkung noch hinzufügen
+    );
     cardButton.innerText = "Go somewhere";
 
-    //cardBody.appendChild(cardDescription);
     cardContainer.appendChild(cardImage);
     cardBody.appendChild(cardTitle);
     cardBody.appendChild(cardButton);
@@ -112,8 +109,6 @@ const displayAnimals = (animals) => {
     cardsContainer.appendChild(cardContainer); // wenn ich die Reihenfolge hier ändern möchte, muss ich hier die Reihenfolge ändenr
   }
 };
-
-// Using Grid (Stacked horizontal) to display the Cards
 
 // 3. Generate Dropdown
 const createDropDown = (animals) => {
@@ -153,7 +148,6 @@ const createDropDown = (animals) => {
 
 // Search Button
 // Set an event listener to the button
-
 function createSearch(animals) {
   const searchButton = document.getElementById("searchButton");
 
@@ -233,6 +227,7 @@ const filterBySearchInput = (animals) => {
   // hier muss ich die oben erstellte Tabelle noch mit den gefilterten Locations aufrufen
 };
 
+// Functions for the combined filters
 const animalMatchesLocation = (animal) => {
   const selectedLocation = document.querySelector("#locationDropdown").value;
   return (
@@ -253,15 +248,42 @@ const animalMatchesSearchQuery = (animal) => {
 
 // Combine both filters
 const combinedFilters = (animals) => {
-  // // console.log("combined filters working");
-  // const selectedLocation = document.querySelector("#locationDropdown").value;
-  // const searchQuery = document.querySelector("#searchInput").value;
-
+  // Filter anwenden
   const filteredAnimals = animals.filter((animal) => {
     return animalMatchesLocation(animal) && animalMatchesSearchQuery(animal);
   });
 
-  displayAnimals(filteredAnimals);
+  // Überprüfen, ob gefilterte Tiere vorhanden sind
+  if (filteredAnimals.length === 0) {
+    // Hier kannst du eine Nachricht anzeigen, wenn keine Ergebnisse gefunden wurden
+    displayNoResultsMessage();
+  } else {
+    // Ansonsten werden die gefilterten Tiere angezeigt
+    displayAnimals(filteredAnimals);
+  }
+};
+
+// Funktion, um die Nachricht anzuzeigen, dass keine Ergebnisse gefunden wurden
+const displayNoResultsMessage = () => {
+  const resultsContainer = document.querySelector(".noResult"); // Dein Container, der die Ergebnisse anzeigt
+  resultsContainer.innerHTML = ""; // NEW leere den container bevor neue karten hinzugefügt werden.
+
+  const cardsContainer = document.querySelector(".row"); // von oben überneommen aus display animal
+  cardsContainer.innerHTML = ""; // NEW leere den container bevor neue karten hinzugefügt werden. ohne diese zeile sind immer alle da + alle, die per filter unten dran gehängt werden
+
+  const noResultsMessage = document.createElement("p");
+  noResultsMessage.innerText =
+    "No animals found that match the current filter criteria.";
+
+  // Falls bereits eine "Keine Ergebnisse"-Nachricht angezeigt wird, kannst du diese vorher entfernen
+  // const existingContent = resultsContainer.querySelector(".no-results");
+  // if (existingContent) {
+  //   resultsContainer.removeChild(existingContent);
+  // }
+
+  // Nachricht einfügen
+  noResultsMessage.classList.add(".no-results");
+  resultsContainer.appendChild(noResultsMessage);
 };
 
 // 4. make control functions
@@ -298,6 +320,8 @@ getData((animals) => {
 // Fehlende oder ungültige commonName-Werte: Im Fall eines fehlenden oder ungültigen commonName kannst du eine Standardbezeichnung wie "Unknown" setzen (falls noch nicht geschehen).
 // kleine Datein mit wenig Code + gute Benennung von Funktionen und Dateien
 
-// ALLE die kein BILD UND kein Titel/ common name  haben, sollen nicht angezeigt werden
+// ALLE die kein BILD UND kein Titel/ common name  haben, sollen nicht angezeigt werden - z.b.  "binomialName": "Pseudoyersinia brevipennis", && "binomialName": "Acalypha wilderi"
 // !!! KEINE ERGEBNISSE GEFUNDEN integrieren
+// keine description vorhanden z.b. Pico rail, "Tabuai rail", - wird nur false angezeigt
 // load more image by scrolling - https://webdesign.tutsplus.com/how-to-implement-infinite-scrolling-with-javascript--cms-37055t
+// Cards feste Größe / Höhe geben

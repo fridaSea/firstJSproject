@@ -13,15 +13,18 @@
     <title>Amazing Animals</title>
 </head>
 <body>
-    
-     <!-- Navigation Bar -->
-     <div class="navbar navbar-main">
-        <a class="active" href="index.html">Home</a>
-        <a href="pages/speciesList/speciesList.html">Species</a>  <!-- WARUM MUSS ICH ES HIER ANDERS MACHEN? Weil index schon ganz oben ist? -->
-        <a href="pages/contact/contact.html">Contact</a>
-        <a href="pages/filter/filter.html">Filters</a>
-      </div>
-    
+     <!-- Navigation Bar with Bootstrap-->
+      <ul class="nav justify-content-center nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="pages/speciesList/speciesList.html">Species</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="pages/contact/contact.html">Contact</a>
+        </li>
+      </ul>
 
     <div class="hero">
         <h1>Forgotten Giants: Exploring Extinct Species</h1>
@@ -37,7 +40,10 @@
             
             Let us take a moment to appreciate the immense beauty and diversity of these lost species, and recognize our responsibility in protecting the fragile species that remain. By understanding the causes of extinction, we can work together to ensure that future generations will not only learn about these magnificent creatures through history but will also have the opportunity to witness the wonders of our living planet.
         </span></p>
-        <button class="read-more-btn">Continue Reading</button>
+
+        <div class="button-container">
+            <button class="read-more-btn">Continue Reading</button>
+        </div>
 
         <div class="action">
             <p>"What Can You Do Today to Save Our Nature?"
@@ -48,7 +54,12 @@
         </div>
     </div>
 
-    
+    <!-- Image  -->
+<div class="image">
+<img src="assets/1.gif" alt="dinosaur as an example of a forgotten giant">
+</div>
+
+    <!-- Footer -->
    <div class="footer">
 
      <span class="copyright"> Mady with Love by _frida_sea_ &copy; 2024</span>
@@ -59,7 +70,6 @@
         <a href="https://www.facebook.com/" target="_blank"><img src="assets/icons8-facebook-32.png" alt="Facebook-LinkIcon"></a>
         <a href="https://www.tiktok.com/" target="_blank"><img src="assets/icons8-tiktok-32.png" alt="Tiktok-LinkIcon"></a>
         <a href="https://www.youtube.com/" target="_blank"><img src="assets/icons8-youtube-32.png" alt="Youtube-LinkIcon"></a>
-    
     </div>
 
     </div>

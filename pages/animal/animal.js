@@ -59,11 +59,16 @@ function displayAnimal(animal) {
   cardBody.setAttribute("class", "card-body");
 
   // Erstelle dynamischen Inhalt
+  // Common Name
   const heading = document.createElement("h1");
   heading.innerText = animal.commonName;
   heading.classList.add("text-center", "my-4"); // Füge Bootstrap-Klassen hinzu
 
-  //Bild erstellen
+  // binomialName
+  const cardBinomialName = document.createElement("p");
+  cardBinomialName.innerText = "Binomial Name: " + animal.binomialName;
+
+  //Bild
   const cardImage = document.createElement("img");
   // console.log("animals[i]image :>>", animals[i].imageSrc);
   //-> das passt, hier werden in der Konsole entweder die Links ausgegebn oder false
@@ -89,14 +94,26 @@ function displayAnimal(animal) {
     );
   }
 
+  // Location
+  const cardLocation = document.createElement("p");
+  cardLocation.innerText = "Location: " + animal.location;
+
+  // Time
+  const cardTime = document.createElement("p");
+  cardTime.innerText = "Last Recorded: " + animal.lastRecord;
+
+  // Short description
   const cardDescription = document.createElement("p");
-  cardDescription.innerText = animal.shortDesc;
+  cardDescription.innerHTML = "Short description: <br>" + animal.shortDesc;
   // const paragraph = document.createElement("p");
   // paragraph.textContent = "Erforsche die Wunder der ausgestorbenen Spezies und vergessene Giganten.";
 
   // Füge den Inhalt in den Container ein
   cardBody.appendChild(heading);
+  cardBody.appendChild(cardBinomialName);
   cardBody.appendChild(cardImage);
+  cardBody.appendChild(cardLocation);
+  cardBody.appendChild(cardTime);
   cardBody.appendChild(cardDescription);
   container.appendChild(cardBody);
 }

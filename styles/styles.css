@@ -8,38 +8,22 @@
 
 body{
     font-family: 'Windows 95' !important;
-   /* text-align: justify; eingefügt aus dem button video*/
    display: flex;
    flex-direction: column;
    justify-content: center;
-   /* align-items: center;
-   align-content: center; */
    padding-left: 45px;
    padding-right: 45px;
    padding-top: 15px;
    padding-bottom: 15px;
    position: relative;
    min-height: 100vh;
-
-    /*max-width: 600px; /*eingefügt aus dem button video
-    margin: 0 auto; /*eingefügt aus dem button video
-    /* grid-template-columns: 1fr;
-    grid-template-rows: auto; */
-   /*margin-left: 300px;
-   margin-right: 200px;*/
 }
 
-.navbar {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    gap: auto; 
-    margin-left: 200px;  
-    margin-right: 200px;
+
+.nav a{
+    color: #212529 !important;
+    text-decoration: none !important;
 }
-/* warum werden diese einstellungen nicht übernommen? sondern nur die von navbar aus pixel.css*/
 
 .hero {
     padding: 30px !important; 
@@ -54,23 +38,22 @@ h1{
 
 
 /* // Show more - Show Less Button */
-.text
+/* .text */
 
 .moreText{
-    display: none; /*damiit der Text nicht mehr angezeigt wird*/
+    display: none; /*damit der Text nicht mehr angezeigt wird*/
+}
+
+.button-container{
+    text-align: center;
 }
 
 .read-more-btn{
-    
-    /* kann noch weiter gestyled werden:background-color: / color: / font-size / cursor:pointer ;;  */
-    /* border: none;
-    outline: none; */
-    color: #000;
+    color: #212529;
     background-color: #c0c0c0;
     border-color: #a0a0a0;
     position:relative;
-    /* letter-spacing: 0.025em; */
-    /* font-size: .6rem; */
+    font-size: .85rem;
     border-radius: 0.125rem;
     padding: .6rem 2rem;
     margin-bottom: 1.5rem;
@@ -88,6 +71,10 @@ h1{
 }
 /* whenever we will have the "show more" in our text, I want to dissapear the dots  */
 
+.image {
+    text-align: center;
+}
+
 .footer {
     display: flex;
     gap: 105px;
@@ -101,14 +88,9 @@ h1{
     margin-top: auto;
 }
 
-.socialIcons{
+/* .socialIcons{
 
-}
-
-.navbar a.active{
-    background-color: rgb(165, 255, 240);
-    border-radius: 10px;
-}
+} */
 
 .main{
     margin-left: 3rem;
@@ -119,11 +101,6 @@ h1{
     margin-top: 4.5rem;
 }
 
-/*
-hero
-main 
-- new file - bootstraptheme.css überschriebenen bootstrap sachen SAHNEHÄUBCHEN
-*/
 
 
 /* TO DO

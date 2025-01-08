@@ -94,6 +94,11 @@
   font-size: 15px;
 }
 
+.noResult{
+margin-top: 35px;
+color:#212529; 
+}
+
 /* #locationDropdown {
   margin-left: 10px;
 } */
