@@ -32,11 +32,11 @@ function findAnimal(animals) {
 }
 
 function displayAnimal(animal) {
-  document.addEventListener("DOMContentLoaded", function () {
-    getData(function (animals) {
-      controller(animals);
-    });
-  });
+  // document.addEventListener("DOMContentLoaded", function () {
+  //   getData(function (animals) {
+  //     controller(animals);
+  //   });
+  // });
 
   // Hole den Container
   const container = document.getElementById("contentContainer");
@@ -61,8 +61,14 @@ function displayAnimal(animal) {
   // Erstelle dynamischen Inhalt
   // Common Name
   const heading = document.createElement("h1");
-  heading.innerText = animal.commonName;
+
   heading.classList.add("text-center", "my-4"); // Füge Bootstrap-Klassen hinzu
+
+  if (animal.commonName && animal.commonName !== "false") {
+    heading.innerText = animal.commonName;
+  } else {
+    heading.innerText = "Unknown";
+  }
 
   // binomialName
   const cardBinomialName = document.createElement("p");
@@ -104,9 +110,15 @@ function displayAnimal(animal) {
 
   // Short description
   const cardDescription = document.createElement("p");
-  cardDescription.innerHTML = "Short description: <br>" + animal.shortDesc;
+
   // const paragraph = document.createElement("p");
   // paragraph.textContent = "Erforsche die Wunder der ausgestorbenen Spezies und vergessene Giganten.";
+
+  if (animal.shortDesc && animal.shortDesc !== "false") {
+    cardDescription.innerHTML = "Short description: <br>" + animal.shortDesc;
+  } else {
+    cardDescription.innerHTML = "No description available";
+  }
 
   // Füge den Inhalt in den Container ein
   cardBody.appendChild(heading);
@@ -119,6 +131,9 @@ function displayAnimal(animal) {
 }
 
 function controller(animals) {
+  const loadingSpinner = document.querySelector(".spinner-border");
+  loadingSpinner.setAttribute("style", "display:none");
+
   const animal = findAnimal(animals);
   //console.log("Found animal:", animal); // Überprüfe, ob das Tier gefunden wurde - works
   displayAnimal(animal);

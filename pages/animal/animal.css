@@ -32,3 +32,17 @@
 p{
     text-align: center;
 }
+
+.btn {
+    text-align: left;
+    width: 100%;
+}
+
+.btn:hover {
+    background-color: #0056b3 !important; /* Dunklerer Farbton beim Hover */
+    cursor: pointer; /* Zeigt einen Zeiger beim Hover */
+  }
+
+/* body{
+
+} */

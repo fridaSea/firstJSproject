@@ -37,9 +37,6 @@ h1{
 }
 
 
-/* // Show more - Show Less Button */
-/* .text */
-
 .moreText{
     display: none; /*damit der Text nicht mehr angezeigt wird*/
 }
@@ -88,17 +85,13 @@ h1{
     margin-top: auto;
 }
 
-/* .socialIcons{
-
-} */
-
 .main{
     margin-left: 3rem;
     margin-right: 3rem;
 }
 
 .action {
-    margin-top: 4.5rem;
+    margin-top: 2rem;
 }
 
 

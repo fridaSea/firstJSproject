@@ -27,11 +27,11 @@
 // CARDS
 
 const displayAnimals = (animals) => {
-  const cardsContainer = document.querySelector(".row"); // toatally forgot about the "cardsContainer" from the .html
-  cardsContainer.innerHTML = ""; // NEW leere den container bevor neue karten hinzugefügt werden. ohne diese zeile sind immer alle da + alle, die per filter unten dran gehängt werden
+  const cardsContainer = document.querySelector(".row");
+  cardsContainer.innerHTML = ""; // leere den container bevor neue karten hinzugefügt werden. ohne diese zeile sind immer alle da + alle, die per filter unten dran gehängt werden
 
-  const resultsContainer = document.querySelector(".noResult"); // Dein Container, der die Ergebnisse anzeigt
-  resultsContainer.innerHTML = ""; // NEW leere den container bevor neue karten hinzugefügt werden.
+  const resultsContainer = document.querySelector(".noResult"); // Container, if no results are found with an info message
+  resultsContainer.innerHTML = ""; // leere den container bevor neue karten hinzugefügt werden.
 
   // Animals Array alphabetisch sortieren
   animals.sort((a, b) => {
@@ -42,6 +42,14 @@ const displayAnimals = (animals) => {
 
   // Karten für jedes Tier erstellen
   for (let i = 0; i < animals.length; i++) {
+    // Überprüfen, ob das Tier einen Namen und ein Bild hat
+    // if (
+    //   animals[i].commonName &&
+    //   animals[i].imageSrc &&
+    //   animals[i].imageSrc !== "false"
+    // ) {
+
+    // cardContainer
     const cardContainer = document.createElement("div");
     cardContainer.setAttribute("class", "card");
     cardContainer.classList.add("col-sm-2");
@@ -49,8 +57,8 @@ const displayAnimals = (animals) => {
     //cardContainer.classList.add("text-center");
     //cardContainer.setAttribute("style", "width: 18rem");
 
+    // cardImage
     const cardImage = document.createElement("img");
-
     // console.log("animals[i]image :>>", animals[i].imageSrc);
     //-> das passt, hier werden in der Konsole entweder die Links ausgegebn oder false
     if (animals[i].imageSrc && animals[i].imageSrc !== "false") {
@@ -72,19 +80,15 @@ const displayAnimals = (animals) => {
         "alt",
         "No image available for " + animals[i].commonName
       );
-      // const cardImage = document.createElement("img");
-      // cardImage.setAttribute("src", "assets/no_pic-32.png"); // want to have it for every element of the array
-      // cardImage.setAttribute("alt", "Platzhalter ");
     }
 
-    // Image - URL error for "Floreana giant tortoise" & Slender-billed curlew TO DO
-
+    // cardBody
     const cardBody = document.createElement("div");
     cardBody.setAttribute("class", "card-body");
 
+    // cardTitle
     const cardTitle = document.createElement("h5");
     cardTitle.setAttribute("class", "card-title");
-    // cardTitle.innerText = animals[i].commonName;
 
     if (animals[i].commonName && animals[i].commonName !== "false") {
       // cardTitle.setAttribute("src", animals[i].commonName);
@@ -94,6 +98,7 @@ const displayAnimals = (animals) => {
       cardTitle.innerText = "Unknown";
     }
 
+    // cardButton
     const cardButton = document.createElement("a");
     cardButton.setAttribute("class", "btn btn-secondary");
     cardButton.setAttribute(
@@ -102,6 +107,7 @@ const displayAnimals = (animals) => {
     );
     cardButton.innerText = "Go somewhere";
 
+    // order
     cardContainer.appendChild(cardImage);
     cardBody.appendChild(cardTitle);
     cardBody.appendChild(cardButton);
@@ -115,7 +121,7 @@ const createDropDown = (animals) => {
   const dropdown = document.getElementById("locationDropdown");
 
   // console.log("animalsDropdown:", animals); // works
-  //NEW
+
   // Stelle sicher, dass die Option "All Locations" hinzugefügt wird /// TO DO - ich möchte das bei ALL immer alle angezeigt werden, z.b. ganz an anfang wenn man auf die Seite kommt
   const allOption = document.createElement("option");
   allOption.value = "all";
@@ -135,7 +141,9 @@ const createDropDown = (animals) => {
   });
   // console.log("locations:>>", locations); // I created an array with the locations of the animals, still repeated (804)
   //const uniqueLocationsArray = new Set(locations); // It created a set, which I don`t want because I am not able to loop over it -> I need to transform this into an array (480)
-  const uniqueLocationsArray = [...new Set(locations)]; // now I have an array with unique locations (480). No I am no longer loop over the animals but over uniqueLocationsArray and I don`t need to access any properties
+  const uniqueLocationsArray = [...new Set(locations)]; // now I have an array with unique locations (480).
+  //No I am no longer loop over the animals but over uniqueLocationsArray and I don`t need to access any properties
+  // Passing an array to new Set()
   //console.log("uniqueLocationsArray:>>", uniqueLocationsArray); -> wird gedruckt
 
   for (let i = 0; i < uniqueLocationsArray.length; i++) {
@@ -175,10 +183,10 @@ function createSearch(animals) {
 
 // 5. ADD EVENT LISTENERS //setDropdownEventListener UMBENENNEN FÜR NÄCHSTE FILTER !!!!
 const setEventListener = (animals) => {
-  const locationListDropdown = document.querySelector("#locationDropdown"); // FRAGE: WARUM KOMMT HIER EIN # DAVOR? -> weil bezogen auf css/ ich könnte auch schreiben mit getelementbyid, dann aber ohen #
+  const locationListDropdown = document.querySelector("#locationDropdown");
   locationListDropdown.addEventListener("change", () => {
     //console.log("location selected", locationListDropdown.value);
-    //filterByDropDown(animals); // FRAGE: WARUM PACKE ICH DAS HIER UNTEN REIN UND NICHT WIE DAS ANDERE OBEN?
+    //filterByDropDown(animals);
     combinedFilters(animals);
   });
 };
