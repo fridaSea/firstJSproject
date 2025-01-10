@@ -1,14 +1,19 @@
 Project for Code Academy Berlin.
 
-The goal of the project was to create a Website using HTML5, CSS3, Bootstrap, JavaScript, (AJAX), APIs, JSON.
-I used a free API providing a list of entries (, use AJAX to make live calls, transform the data in JSON format and display them using DOM manipulation.)
+This was my first project using JavaScript.
+The goal of the project was to create a Website using HTML, CSS, Bootstrap, JavaScript, AJAX, APIs, JSON, Postman.
+I used a free API providing a list of entries, use AJAX to make live calls, transform the data in JSON format and display them using DOM manipulation.
 
-I used an API about extincted animals. With the endpoints of the API, I made some filters and a search.
+About the pages:
+On the Homepage is a Read More Read Less Button, to show more or less of the text.
 
-There is a datalist to 'suggest' search results from my initial fetch if the user doesn't know a specific name of an extincted animal.
-????Clicking "more" will provide access to a shuffle function, and a "type" selector which will limit results from both the search and shuffle to the selected type/s. ????
-???? Clicking the resulting animla card will open a model with more information. Filter options are available for the location, lastRecord & commonName. ????
+On the Species Page I used an API about extincted animals. With the endpoints of the API, I made a dropdown filter and a search field and combined both.
+Filter options are available for the location and the search is available for the name and the location.
+Clicking on the resulting animal card it will open a new page with more information about this specific animal.
+Also you can find loading spinners on the pages with the animals.
 
-Most styled elements are done with a Theme, which was molded with Bootstrap 4 Components.
+Styling was done with CSS and Bootstrap Components.
 
-API here. Live preview here.
+API see [here](https://cheba-apis.vercel.app/?ref=freepublicapis.com).
+
+Live preview [here](https://cheba-apis.vercel.app/?ref=freepublicapis.com).
